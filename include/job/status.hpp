@@ -16,6 +16,7 @@ class status {
     auto lag() const { return _lag; }
     auto set_lag(com::microseconds v) { _lag = v; }
 
+    bool is_alive() const;
     void kill();
     bool beat();
 

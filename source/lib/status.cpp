@@ -16,14 +16,18 @@ status::status(std::string_view name, int32_t core)
     std::strncpy(_name, name.data(), sizeof(_name));
 }
 
+bool status::is_alive() const {
+    return _heartbeat & 1;
+}
+
 void status::kill() {
-    _step = 1;
+    _step = 1;    // switch heartbeat to even number
 }
 
 bool status::beat() {
     _heartbeat += _step;
     std::this_thread::sleep_for(_lag);
-    return _heartbeat & 1;
+    return is_alive();
 }
 
 }    // namespace miu::job

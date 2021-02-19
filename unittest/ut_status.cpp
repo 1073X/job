@@ -25,7 +25,7 @@ TEST(ut_status, kill) {
 
     status.kill();
     EXPECT_FALSE(status.beat());
-    EXPECT_EQ(0, status.heartbeat() & 1);
+    EXPECT_TRUE(!status.is_alive());
 }
 
 TEST(ut_status, lag) {

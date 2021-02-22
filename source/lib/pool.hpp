@@ -13,7 +13,7 @@ class pool {
 
     ~pool() { stop(); }
 
-    void add(std::string_view name, int32_t core, com::microseconds lag, func_type const& func) {
+    void add(std::string_view name, int32_t core, time::delta lag, func_type const& func) {
         if (_tasks.size() >= _tasks.capacity()) {
             FATAL_ERROR<std::logic_error>("too many tasks", name);
         }

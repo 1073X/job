@@ -14,7 +14,7 @@ namespace miu::job {
 
 class task {
   public:
-    task(std::string_view name, int32_t core, com::microseconds lag, func_type const& func)
+    task(std::string_view name, int32_t core, time::delta lag, func_type const& func)
         : _status { name, core }
         , _func(func) {
         _status.set_lag(lag);

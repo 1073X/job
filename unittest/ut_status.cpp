@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <com/datetime.hpp>
+#include <time/time.hpp>
 
 #include "job/status.hpp"
 
@@ -33,9 +33,9 @@ TEST(ut_status, lag) {
 
     EXPECT_EQ(0, status.lag().count());
 
-    status.set_lag(200us);
+    status.set_lag(10ms);
 
-    auto before = miu::com::datetime::now();
+    auto before = miu::time::now();
     status.beat();
-    EXPECT_LE(200us, miu::com::datetime::now() - before);
+    EXPECT_LE(200us, miu::time::now() - before);
 }

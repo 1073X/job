@@ -7,7 +7,7 @@ namespace miu::job {
 
 pool g_pool;
 
-void add(std::string_view name, int32_t core, com::microseconds lag, func_type const& func) {
+void add(std::string_view name, int32_t core, time::delta lag, func_type const& func) {
     g_pool.add(name, core, lag, func);
 }
 

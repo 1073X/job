@@ -1,7 +1,7 @@
 #pragma once
 
-#include <com/microseconds.hpp>
 #include <string_view>
+#include <time/delta.hpp>
 
 namespace miu::job {
 
@@ -14,7 +14,7 @@ class status {
     auto heartbeat() const { return _heartbeat; }
 
     auto lag() const { return _lag; }
-    auto set_lag(com::microseconds v) { _lag = v; }
+    auto set_lag(time::delta v) { _lag = v; }
 
     bool is_alive() const;
     void kill();
@@ -23,9 +23,9 @@ class status {
   private:
     uint32_t _step;
     uint32_t _heartbeat;
-    com::microseconds _lag;
+    time::delta _lag;
     int32_t _core;
-    uint32_t _padding[7];
+    uint32_t _padding[8];
     char _name[16];
 };
 static_assert(sizeof(status) == CACHE_LINE);

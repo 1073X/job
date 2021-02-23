@@ -40,6 +40,7 @@ class pool {
         for (auto& t : _tasks) {
             t.join();
         }
+        _tasks.clear();
     }
 
   private:

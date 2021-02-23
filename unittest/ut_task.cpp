@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <asp/asp.hpp>
 #include <log/log.hpp>
 
 #include "source/lib/task.hpp"
@@ -9,11 +10,12 @@ using namespace std::chrono_literals;
 struct ut_task : public testing::Test {
     void SetUp() override {
         using miu::log::severity;
-        // miu::log::log::instance()->reset(severity::DEBUG, 1024);
+        miu::log::reset(severity::DEBUG, 1024);
     }
 
     void TearDown() override {
-        // miu::log::log::instance()->dump();
+        miu::asp::reset();
+        miu::log::dump();
     }
 };
 
@@ -70,3 +72,7 @@ TEST_F(ut_task, unknown_exp) {
     task.join();
 }
 
+TEST_F(ut_task, asps) {
+    miu::job::task task("ut_task", 2, 100us, [](auto) {});
+    miu::asp::reset("ut_task");
+}

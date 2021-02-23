@@ -10,12 +10,12 @@ using namespace std::chrono_literals;
 struct ut_task : public testing::Test {
     void SetUp() override {
         using miu::log::severity;
-        miu::log::reset(severity::DEBUG, 1024);
+        // miu::log::reset(severity::DEBUG, 1024);
     }
 
     void TearDown() override {
         miu::asp::reset();
-        miu::log::dump();
+        // miu::log::dump();
     }
 };
 

@@ -7,8 +7,7 @@
 
 #include "job/func_type.hpp"
 #include "job/status.hpp"
-
-#include "utility.hpp"
+#include "job/utility.hpp"
 
 namespace miu::job {
 

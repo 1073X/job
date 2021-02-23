@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "source/lib/signal.hpp"
+#include <csignal>
+
+#include "job/signal.hpp"
 
 TEST(ut_signal, init) {
     auto signal = miu::job::signal::instance();

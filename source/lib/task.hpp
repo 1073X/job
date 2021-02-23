@@ -19,10 +19,10 @@ class task {
         , _func(func) {
         _status.set_lag(lag);
 
-        asp::read({ +"job", name, +"heartbeat" }, &status::heartbeat, &_status);
-        asp::read({ +"job", name, +"core" }, &status::core, &_status);
-        asp::read({ +"job", name, +"lag" }, &status::lag, &_status);
-        asp::read({ +"job", name, +"alive" }, &status::is_alive, &_status);
+        asp::read({ +"_JOB_", name, +"heartbeat" }, &status::heartbeat, &_status);
+        asp::read({ +"_JOB_", name, +"core" }, &status::core, &_status);
+        asp::read({ +"_JOB_", name, +"lag" }, &status::lag, &_status);
+        asp::read({ +"_JOB_", name, +"alive" }, &status::is_alive, &_status);
     }
 
     task(task&& another)
@@ -65,9 +65,9 @@ class task {
         set_name(_status.name());
         set_core(_status.core());
 
-        log::debug(+"job", get_name(), +"STARTED on core", get_core(), +"LAG =", _status.lag());
+        log::debug(+"job BEG", get_name(), +"CORE", get_core(), +"LAG", _status.lag());
         _func(&_status);
-        log::debug(+"job", _status.name(), +"STOPPED");
+        log::debug(+"job END", _status.name());
 
     } catch (std::exception const& err) {
         log::error(+"job", _status.name(), std::string(err.what()));

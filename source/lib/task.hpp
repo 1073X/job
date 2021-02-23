@@ -19,10 +19,10 @@ class task {
         , _func(func) {
         _status.set_lag(lag);
 
-        asp::read({ +"_JOB_", name, +"heartbeat" }, &status::heartbeat, &_status);
-        asp::read({ +"_JOB_", name, +"core" }, &status::core, &_status);
-        asp::read({ +"_JOB_", name, +"lag" }, &status::lag, &_status);
-        asp::read({ +"_JOB_", name, +"alive" }, &status::is_alive, &_status);
+        asp::read({ +"_COM_", +"job", name, +"hb" }, &status::heartbeat, &_status);
+        asp::read({ +"_COM_", +"job", name, +"core" }, &status::core, &_status);
+        asp::read({ +"_COM_", +"job", name, +"lag" }, &status::lag, &_status);
+        asp::read({ +"_COM_", +"job", name, +"alive" }, &status::is_alive, &_status);
     }
 
     task(task&& another)

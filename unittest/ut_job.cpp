@@ -12,10 +12,12 @@ struct ut_job : public testing::Test {
 
     void SetUp() override {
         using miu::log::severity;
-        miu::log::log::instance()->reset(severity::DEBUG, 1024);
+        // miu::log::reset(severity::DEBUG, 1024);
     }
 
-    void TearDown() override { miu::log::log::instance()->dump(); }
+    void TearDown() override {
+        // miu::log::dump();
+    }
 };
 
 TEST_F(ut_job, test) {

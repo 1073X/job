@@ -47,9 +47,9 @@ delivery:
     only:
         - master
 
-downstream-project:
+svc:
     stage: trigger
     script:
-        - echo "curl -X POST -F token=<downstream-project-token> -F ref=master <url>/api/v4/projects/<downstream-project-id>/trigger/pipeline"
+        - curl -X POST -F token=4583a5f42fb46e80ef3ba95a78c980 -F ref=master $GITLAB_URL/api/v4/projects/15/trigger/pipeline
     only:
         - master

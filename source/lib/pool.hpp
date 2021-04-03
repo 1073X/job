@@ -11,7 +11,10 @@ class pool {
   public:
     pool() { _tasks.reserve(com::thread_id::max()); }
 
-    ~pool() { stop(); }
+    ~pool() {
+        stop();
+        _tasks.clear();
+    }
 
     void add(std::string_view name, int32_t core, time::delta lag, func_type const& func) {
         if (_tasks.size() >= _tasks.capacity()) {
@@ -40,7 +43,6 @@ class pool {
         for (auto& t : _tasks) {
             t.join();
         }
-        _tasks.clear();
     }
 
   private:

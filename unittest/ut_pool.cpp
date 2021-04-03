@@ -2,6 +2,7 @@
 
 #include <com/thread_id.hpp>
 #include <log/log.hpp>
+#include <thread>
 
 #include "job/pool.hpp"
 
@@ -24,11 +25,13 @@ struct ut_pool : public testing::Test {
 
 TEST_F(ut_pool, exec) {
     pool.add("task0", 1, 100us, std::bind(&ut_pool::func, this, std::placeholders::_1));
-    pool.add("task1", 1, 100us, std::bind(&ut_pool::func, this, std::placeholders::_1));
+    pool.add("task1", 100us, &ut_pool::func, static_cast<ut_pool*>(this));
+    pool.add("task2", 2, &ut_pool::func, static_cast<ut_pool*>(this));
 
-    EXPECT_CALL(*this, func(testing::_)).Times(testing::AtLeast(2));
+    EXPECT_CALL(*this, func(testing::_)).Times(testing::AtLeast(3));
 
     pool.start();
+    std::this_thread::sleep_for(100ms);
     pool.stop();
     pool.clear();
 }

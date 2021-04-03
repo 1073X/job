@@ -29,7 +29,7 @@ TEST_F(ut_pool, exec) {
     EXPECT_CALL(*this, func(testing::_)).Times(testing::AtLeast(2));
 
     pool.start();
-    pool.stop();
+    pool.clear();
 }
 
 TEST_F(ut_pool, duplicated) {

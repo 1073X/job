@@ -4,6 +4,7 @@
 #include <functional>
 #include <log/log.hpp>
 #include <thread>
+#include <utility>
 
 #include "job/func_type.hpp"
 #include "job/status.hpp"
@@ -13,9 +14,9 @@ namespace miu::job {
 
 class task {
   public:
-    task(std::string_view name, int32_t core, time::delta lag, func_type const& func)
+    task(std::string_view name, int32_t core, time::delta lag, func_type func)
         : _status { name, core }
-        , _func(func) {
+        , _func(std::move(func)) {
         _status.set_lag(lag);
 
         asp::read({ +"_COM_", +"job", name, +"hb" }, &status::heartbeat, &_status);
@@ -24,17 +25,8 @@ class task {
         asp::read({ +"_COM_", +"job", name, +"alive" }, &status::is_alive, &_status);
     }
 
-    task(task&& another)
-        : _status(std::move(another._status))
-        , _thrd(std::move(another._thrd))
-        , _func(std::move(another._func)) {}
-
-    task& operator=(task&& another) {
-        std::swap(_status, another._status);
-        std::swap(_thrd, another._thrd);
-        std::swap(_func, another._func);
-        return *this;
-    }
+    task(task const&) = delete;
+    auto operator=(task const&) = delete;
 
     ~task() { join(); }
 

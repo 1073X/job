@@ -3,7 +3,7 @@
 #include <com/thread_id.hpp>
 #include <log/log.hpp>
 
-#include "source/lib/pool.hpp"
+#include "job/pool.hpp"
 
 using namespace std::chrono_literals;
 
@@ -29,6 +29,7 @@ TEST_F(ut_pool, exec) {
     EXPECT_CALL(*this, func(testing::_)).Times(testing::AtLeast(2));
 
     pool.start();
+    pool.stop();
     pool.clear();
 }
 

@@ -18,13 +18,19 @@ class pool {
 
     void add(std::string_view name, int32_t core, time::delta, func_type);
 
-    auto add(std::string_view name, int32_t core, func_type func) {
-        add(name, core, time::delta::min(), std::move(func));
+    template<typename R, typename T>
+    auto add(std::string_view name, int32_t core, time::delta lag, R (T::*f)(status*), T* t) {
+        add(name, get_core(), lag, std::bind(f, t, std::placeholders::_1));
+    }
+
+    template<typename R, typename T>
+    auto add(std::string_view name, int32_t core, R (T::*f)(status*), T* t) {
+        add(name, get_core(), time::delta::min(), f, t);
     }
 
     template<typename R, typename T>
     auto add(std::string_view name, time::delta lag, R (T::*f)(status*), T* t) {
-        add(name, get_core(), lag, std::bind(f, t, std::placeholders::_1));
+        add(name, get_core(), lag, f, t);
     }
 
     void start();

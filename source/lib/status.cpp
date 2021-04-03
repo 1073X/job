@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cstring>    // std::strncpy
+#include <log/log.hpp>
 #include <thread>
 
 namespace miu::job {
@@ -21,6 +22,7 @@ bool status::is_alive() const {
 }
 
 void status::kill() {
+    log::debug(+"job KILL", std::string(_name));
     _step = 1;    // switch heartbeat to even number
 }
 

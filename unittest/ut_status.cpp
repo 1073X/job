@@ -17,7 +17,7 @@ TEST(ut_status, beat) {
     EXPECT_EQ(1, status.heartbeat());
 
     EXPECT_TRUE(status.beat());
-    EXPECT_EQ(3, status.heartbeat());
+    EXPECT_EQ(2, status.heartbeat());
 }
 
 TEST(ut_status, kill) {

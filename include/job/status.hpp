@@ -13,15 +13,16 @@ class status {
     auto core() const { return _core; }
     auto heartbeat() const { return _heartbeat; }
 
+    bool is_alive() const { return _alive; }
+    auto kill() { _alive = false; }
+
     auto lag() const { return _lag; }
     auto set_lag(time::delta v) { _lag = v; }
 
-    bool is_alive() const;
-    void kill();
     bool beat();
 
   private:
-    uint32_t _step;
+    bool _alive;
     uint32_t _heartbeat;
     time::delta _lag;
     int32_t _core;

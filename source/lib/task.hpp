@@ -38,16 +38,11 @@ class task {
         } else if (!_status.is_alive()) {
             FATAL_ERROR(_status.name(), +"has been killed.");
         } else {
-            log::debug(+"job START", name());
             _thrd = std::thread(std::bind(&task::proc, this));
         }
     }
 
-    void stop() {
-        if (_status.is_alive()) {
-            _status.kill();
-        }
-    }
+    void stop() { _status.kill(); }
 
     void join() {
         stop();

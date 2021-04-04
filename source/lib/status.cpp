@@ -9,7 +9,7 @@
 namespace miu::job {
 
 status::status(std::string_view name, int32_t core)
-    : _step(2)
+    : _alive(true)
     , _heartbeat(1)
     , _lag { 0 }
     , _core(core) {
@@ -17,16 +17,8 @@ status::status(std::string_view name, int32_t core)
     std::strncpy(_name, name.data(), sizeof(_name));
 }
 
-bool status::is_alive() const {
-    return _heartbeat & 1;
-}
-
-void status::kill() {
-    _step = 1;    // switch heartbeat to even number
-}
-
 bool status::beat() {
-    _heartbeat += _step;
+    _heartbeat++;
     std::this_thread::sleep_for(_lag);
     return is_alive();
 }
